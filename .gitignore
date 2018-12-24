@@ -3,3 +3,7 @@
 .idea/
 
 CG.sln.DotSettings.user
+CG/bin/Debug/
+packages/
+CG/obj/
+CG/obj/Debug/CG.csproj.CoreCompileInputs.cache
