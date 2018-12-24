@@ -1,3 +1,5 @@
 *.ide
 .vs/
+.idea/
 
+CG.sln.DotSettings.user
