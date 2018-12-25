@@ -75,8 +75,8 @@ namespace CG.HexogonFolder
 				}
 			}
 			matrix[0, 0] = (float)Math.Cos(angle);
-			matrix[0, 1] = (float)-Math.Sin(angle);
-			matrix[1, 0] = (float)Math.Sin(angle);
+			matrix[0, 1] = (float)Math.Sin(angle);
+			matrix[1, 0] = (float)-Math.Sin(angle);
 			matrix[1, 1] = (float)Math.Cos(angle);
 			matrix[2, 2] = 1;
 			return matrix;
