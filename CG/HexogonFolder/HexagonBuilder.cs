@@ -26,13 +26,13 @@ namespace CG.HexogonFolder
 			CurrentTick = 0;
 
 			DeltaX = (int)(Math.PI / 6 * Radius);
-			Center = new Vector3(-width / 2, 0, 1);
+			Center = new Vector3(-(width / 2), 0, 1);
 			ZeroHexagon = new Hexagon();
-			ZeroHexagon.Center = new Point(0, 0);
-			ZeroHexagon.BorderPoints = new List<Point>();
+			ZeroHexagon.Center = new Vector3(0, 0, 0);
+			ZeroHexagon.BorderPoints = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
-				ZeroHexagon.BorderPoints.Add(new Point((int)(Radius * Math.Cos(i * Math.PI / 3)), (int)(Radius * Math.Sin(i * Math.PI / 3))));
+				ZeroHexagon.BorderPoints.Add(new Vector3((int)(Radius * Math.Cos(i * Math.PI / 3)), (int)(Radius * Math.Sin(i * Math.PI / 3)), 0));
 			}
 		}
 
@@ -41,7 +41,7 @@ namespace CG.HexogonFolder
 			Center.X = (-WindowWidth / 2) + DeltaX * CurrentTick;
 			CurrentTick += 1;
 
-			var newBorder = new List<Point>();
+			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
 				//Поворачиваем гексагон на угол 30 градусов * колчество тиков
@@ -50,7 +50,7 @@ namespace CG.HexogonFolder
 
 			return new Hexagon()
 			{
-				Center = new Point(),
+				Center = new Vector3(),
 				BorderPoints = newBorder
 			};
 		}
@@ -65,9 +65,9 @@ namespace CG.HexogonFolder
 			return newPoint;
 		}
 
-		private Point MoveVector(Vector3 vector, int deltaX)
+		private Vector3 MoveVector(Vector3 vector, int deltaX)
 		{
-			return new Point((int)(vector.X + deltaX), (int)vector.Y);
+			return new Vector3((int)(vector.X + deltaX), (int)vector.Y, (int)vector.Z);
 		}
 	}
 }
