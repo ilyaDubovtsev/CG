@@ -17,6 +17,7 @@ namespace CG.HexogonFolder
 		public static double DeltaPhi = Math.PI / 6;
 		public Hexagon ZeroHexagon;
 		public List<Vector3> BorderVectors;
+		
 
 		public HexagonBuilder(int width, int height)
 		{
@@ -28,11 +29,12 @@ namespace CG.HexogonFolder
 			DeltaX = (int)(Math.PI / 6 * Radius);
 			Center = new Vector3(-width / 2, 0, 1);
 			ZeroHexagon = new Hexagon();
-			ZeroHexagon.Center = new Point(0, 0);
-			ZeroHexagon.BorderPoints = new List<Point>();
+			ZeroHexagon.Center = new Vector3(0,0,0);
+			ZeroHexagon.BorderPoints = new List<Vector3>();
+
 			for (int i = 0; i < 6; i++)
 			{
-				ZeroHexagon.BorderPoints.Add(new Point((int)(Radius * Math.Cos(i * Math.PI / 3)), (int)(Radius * Math.Sin(i * Math.PI / 3))));
+				ZeroHexagon.BorderPoints.Add(new Vector3((float)(Radius * Math.Cos(i * Math.PI / 3)), (float)(Radius * Math.Sin(i * Math.PI / 3)), 0));
 			}
 		}
 
@@ -41,33 +43,56 @@ namespace CG.HexogonFolder
 			Center.X = (-WindowWidth / 2) + DeltaX * CurrentTick;
 			CurrentTick += 1;
 
-			var newBorder = new List<Point>();
+			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
 				//Поворачиваем гексагон на угол 30 градусов * колчество тиков
-				newBorder.Add(MoveVector(TurnPoint(BorderVectors[i], CurrentTick * Math.PI / 6), CurrentTick * DeltaX));
+				
 			}
 
 			return new Hexagon()
 			{
-				Center = new Point(),
+				Center = new Vector3(),
 				BorderPoints = newBorder
 			};
 		}
 
-		private Vector3 TurnPoint(Vector3 vector, double phi)
+		private Vector3 TurnPoint(Vector3 vector, float angle)
 		{
-			var x = vector.X;
-			var y = vector.Y;
-			var z = vector.Z;
-			var newPoint = new Vector3((int)(x * Math.Cos(HexagonBuilder.DeltaPhi) + y * Math.Sin(HexagonBuilder.DeltaPhi)),
-				(int)(-x * Math.Sin(HexagonBuilder.DeltaPhi) + y * Math.Cos(HexagonBuilder.DeltaPhi)), z);
-			return newPoint;
+			
 		}
 
-		private Point MoveVector(Vector3 vector, int deltaX)
+		private Vector3 MoveVector(Vector3 vector, int deltaX)
 		{
-			return new Point((int)(vector.X + deltaX), (int)vector.Y);
+			return new Vector3((float)(vector.X + deltaX), (float)vector.Y, vector.Z);
+		}
+
+		private static float[,] CreateTurnMatrix(double angle)
+		{
+			var matrix = new float[3, 3];
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
+					matrix[i, j] = 0;
+				}
+			}
+			matrix[0, 0] = (float)Math.Cos(angle);
+			matrix[0, 1] = (float)-Math.Sin(angle);
+			matrix[1, 0] = (float)Math.Sin(angle);
+			matrix[1, 1] = (float)Math.Cos(angle);
+			matrix[2, 2] = 1;
+			return matrix;
+		}
+
+		private Vector3 MatrixMultiplication(Vector3 vector, float[,] turnMatrix)
+		{
+			
+			var result = new Vector3();
+			result.X = vector.X* turnMatrix[0,0] + vector.Y * turnMatrix[0,1] + vector.Z * turnMatrix[0, 2];
+			result.Y = vector.X * turnMatrix[1, 0] + vector.Y * turnMatrix[1, 1] + vector.Z * turnMatrix[1, 2];
+			result.Z = vector.X * turnMatrix[2, 0] + vector.Y * turnMatrix[2, 1] + vector.Z * turnMatrix[2, 2];
+			return result;
 		}
 	}
 }
