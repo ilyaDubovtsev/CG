@@ -16,7 +16,6 @@ namespace CG.HexogonFolder
 		private int CurrentTick;
 		public static double DeltaPhi = Math.PI / 6;
 		public Hexagon ZeroHexagon;
-		public List<Vector3> BorderVectors;
 
 
 		public HexagonBuilder(int width, int height)
@@ -46,7 +45,7 @@ namespace CG.HexogonFolder
 			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
-				newBorder.Add(TurnPoint(BorderVectors[i], (float)DeltaPhi * CurrentTick));
+				newBorder.Add(TurnPoint(ZeroHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
 				newBorder[newBorder.Count - 1] = new Vector3(newBorder[newBorder.Count - 1].X - (WindowWidth / 2) + DeltaX * CurrentTick, newBorder[newBorder.Count - 1].Y, 0);
 			}
 
