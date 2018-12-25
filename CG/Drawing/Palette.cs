@@ -24,7 +24,7 @@ namespace CG.Painter
         
         public static Color GetColorByNumber(int n)
         {
-            return Rainbow[n];
+            return Rainbow[n % Rainbow.Length];
         }
     }
 }
