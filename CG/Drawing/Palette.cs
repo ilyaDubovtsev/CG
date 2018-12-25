@@ -5,23 +5,26 @@ namespace CG.Painter
 {
     public static class Palette
     {
-        public static Color GetGreenColor() => Color.Green;
-
-        public static Color ColorGetRandomColor()
+        private static Color[] Rainbow =
         {
-            var rainbow = new Color[]
-            {
-                Color.Red,
-                Color.Orange,
-                Color.Yellow,
-                Color.Green,
-                Color.LightSkyBlue,
-                Color.RoyalBlue,
-                Color.Purple
-                
-            };
-            var random = new Random();
-            return rainbow[random.Next(100) % 7];
+//            Color.Red,
+            Color.Orange,
+            Color.Yellow,
+            Color.Green,
+            Color.LightSkyBlue,
+            Color.RoyalBlue,
+            Color.Purple
+        };
+        
+        public static Color ColorGetRandomColor(int n)
+        {
+            var random = new Random(n);
+            return Rainbow[random.Next(100) % 7];
+        }
+        
+        public static Color GetColorByNumber(int n)
+        {
+            return Rainbow[n];
         }
     }
 }

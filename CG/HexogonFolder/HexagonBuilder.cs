@@ -22,7 +22,7 @@ namespace CG.HexogonFolder
 		{
 			WindowWidth = width;
 			WindowHeight = height;
-			Radius = 0.05;
+			Radius = 0.3;
 			CurrentTick = 0;
 
 			DeltaX = (Math.PI / 6 * Radius);
