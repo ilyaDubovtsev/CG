@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using OpenTK;
 
 namespace CG.HexogonFolder
 {
     public class Hexagon
     {
-        public Point Center;
-        public List<Point> BorderPoints;
+        public Vector3 Center;
+        public List<Vector3> BorderPoints;
     }
 
 }
