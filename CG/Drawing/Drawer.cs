@@ -9,14 +9,14 @@ namespace CG.Painter
 {
     public static class Drawer
     {
-        public static void DrawHexagon(List<Vector3> vectorSet, Func<Color> getColor)
+        public static void DrawHexagon(List<Vector3> vectorSet, Vector3 center, Func<Color> getColor)
         {
-            for (int i = 0; i < vectorSet.Count / 3; i++)
+            for (int i = 0; i < vectorSet.Count / 2; i++)
             {
                 var triangleVectors = new List<Vector3> {
-                    vectorSet[i],
-                    vectorSet[i + 1],
-                    vectorSet[i + 3]
+                    center,
+                    vectorSet[i * 2],
+                    vectorSet[i * 2 + 1],
                 };
                 DrawTriangle(triangleVectors, getColor());
             }

@@ -38,18 +38,9 @@ namespace CG.Painter
             GL.ClearColor(Color.FromArgb(5,5,25));
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Flush();
-            var vectors = new List<Vector3>
-            {
-                new Vector3(0, 0, 0),
-                new Vector3(1, 1, 0),
-                new Vector3(1, 1, 0),
-                new Vector3(1, (float) 0.8, 0),
-                new Vector3((float) 0.2, 1, 0),
-                new Vector3(1, (float) 0.1, 0),
-                new Vector3(0, 0, 0),
-            };
-            Drawer.DrawLine(vectors, Color.Red);
-            
+            var hexagon = HexagonBuilder.GetNext();
+            Drawer.DrawLine(hexagon.BorderPoints, Color.Red);
+            Drawer.DrawHexagon(hexagon.BorderPoints, hexagon.Center, Palette.ColorGetRandomColor);
 
             Window.SwapBuffers();
         }
