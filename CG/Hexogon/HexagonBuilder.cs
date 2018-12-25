@@ -4,35 +4,36 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace CG.HexogonFolder
+namespace CG.HexagonFolder
 {
 	public class HexagonBuilder : IHexagonBuilder
 	{
-		public Vector3 Center;
-		public double Radius;
-		public double DeltaX;
-		private int WindowWidth;
-		private int WindowHeight;
+		private static double Radius;
+		private static double DeltaX;
 		private int CurrentTick;
-		public static double DeltaPhi = Math.PI / 6;
-		public Hexagon ZeroHexagon;
+		private const double DeltaPhi = Math.PI / 6;
+		private static Hexagon CurrentHexagon;
 
 
 		public HexagonBuilder(int width, int height)
 		{
-			WindowWidth = width;
-			WindowHeight = height;
-			Radius = 0.3;
 			CurrentTick = 0;
 
+			var horizontalR = 0.05 * width;
+			var verticalR = 0.2 * height;
+			
+			Radius = (horizontalR > verticalR) ? horizontalR / width : verticalR / height;
+			
 			DeltaX = (Math.PI / 6 * Radius);
-			ZeroHexagon = new Hexagon();
-			ZeroHexagon.Center = new Vector3(0, 0, 0);
-			ZeroHexagon.BorderPoints = new List<Vector3>();
+			CurrentHexagon = new Hexagon 
+				{
+					Center = new Vector3(0, 0, 0), 
+					BorderPoints = new List<Vector3>()
+				};
 
 			for (int i = 0; i < 6; i++)
 			{
-				ZeroHexagon.BorderPoints.Add(new Vector3((float)(Radius * Math.Cos(i * Math.PI / 3)), (float)(Radius * Math.Sin(i * Math.PI / 3)), 0));
+				CurrentHexagon.BorderPoints.Add(new Vector3((float)(Radius * Math.Cos(i * Math.PI / 3)), (float)(Radius * Math.Sin(i * Math.PI / 3)), 0));
 			}
 		}
 
@@ -43,13 +44,13 @@ namespace CG.HexogonFolder
 			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
-				newBorder.Add(TurnPoint(ZeroHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
+				newBorder.Add(TurnPoint(CurrentHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
 				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y, 0);
 			}
 
 			return new Hexagon()
 			{
-				Center = new Vector3((float)(ZeroHexagon.Center.X - 1 + DeltaX * CurrentTick), ZeroHexagon.Center.Y, ZeroHexagon.Center.Z),
+				Center = new Vector3((float)(CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick), CurrentHexagon.Center.Y, CurrentHexagon.Center.Z),
 				BorderPoints = newBorder
 			};
 		}

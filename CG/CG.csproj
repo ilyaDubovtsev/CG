@@ -38,9 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\Palette.cs" />
-    <Compile Include="HexogonFolder\Hexagon.cs" />
-    <Compile Include="HexogonFolder\HexagonBuilder.cs" />
-    <Compile Include="HexogonFolder\IHexagonBuilder.cs" />
+    <Compile Include="Hexogon\Hexagon.cs" />
+    <Compile Include="Hexogon\HexagonBuilder.cs" />
+    <Compile Include="Hexogon\IHexagonBuilder.cs" />
     <Compile Include="Drawing\Game.cs" />
     <Compile Include="Drawing\Drawer.cs" />
     <Compile Include="Program.cs" />

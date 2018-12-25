@@ -1,4 +1,4 @@
-﻿namespace CG.HexogonFolder
+﻿namespace CG.HexagonFolder
 {
     public interface IHexagonBuilder
     {

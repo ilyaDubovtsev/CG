@@ -2,7 +2,7 @@
 using System.Drawing;
 using OpenTK;
 
-namespace CG.HexogonFolder
+namespace CG.HexagonFolder
 {
     public class Hexagon
     {

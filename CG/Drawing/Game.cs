@@ -4,7 +4,7 @@ using OpenTK;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using CG.HexogonFolder;
+using CG.HexagonFolder;
 using OpenTK.Graphics.OpenGL;
 
 namespace CG.Painter
