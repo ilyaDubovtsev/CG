@@ -37,6 +37,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\Palette.cs" />
     <Compile Include="HexogonFolder\Hexagon.cs" />
     <Compile Include="HexogonFolder\HexagonBuilder.cs" />
     <Compile Include="HexogonFolder\IHexagonBuilder.cs" />
