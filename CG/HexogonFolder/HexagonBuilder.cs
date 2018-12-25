@@ -9,8 +9,8 @@ namespace CG.HexogonFolder
 	public class HexagonBuilder : IHexagonBuilder
 	{
 		public Vector3 Center;
-		public int Radius;
-		public int DeltaX;
+		public double Radius;
+		public double DeltaX;
 		private int WindowWidth;
 		private int WindowHeight;
 		private int CurrentTick;
@@ -22,11 +22,10 @@ namespace CG.HexogonFolder
 		{
 			WindowWidth = width;
 			WindowHeight = height;
-			Radius = width / 20;
+			Radius = 0.05;
 			CurrentTick = 0;
 
-			DeltaX = (int)(Math.PI / 6 * Radius);
-			Center = new Vector3(-width / 2, 0, 1);
+			DeltaX = (Math.PI / 6 * Radius);
 			ZeroHexagon = new Hexagon();
 			ZeroHexagon.Center = new Vector3(0, 0, 0);
 			ZeroHexagon.BorderPoints = new List<Vector3>();
@@ -39,19 +38,18 @@ namespace CG.HexogonFolder
 
 		public Hexagon GetNext()
 		{
-			Center.X = (-WindowWidth / 2) + DeltaX * CurrentTick;
 			CurrentTick += 1;
 
 			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
 				newBorder.Add(TurnPoint(ZeroHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
-				newBorder[newBorder.Count - 1] = new Vector3(newBorder[newBorder.Count - 1].X - (WindowWidth / 2) + DeltaX * CurrentTick, newBorder[newBorder.Count - 1].Y, 0);
+				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y, 0);
 			}
 
 			return new Hexagon()
 			{
-				Center = new Vector3(ZeroHexagon.Center.X - WindowWidth / 2 + DeltaX * CurrentTick, ZeroHexagon.Center.Y, ZeroHexagon.Center.Z),
+				Center = new Vector3((float)(ZeroHexagon.Center.X - 1 + DeltaX * CurrentTick), ZeroHexagon.Center.Y, ZeroHexagon.Center.Z),
 				BorderPoints = newBorder
 			};
 		}
