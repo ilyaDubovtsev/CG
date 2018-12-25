@@ -46,7 +46,7 @@ namespace CG.HexogonFolder
 			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
-				//Поворачиваем гексагон на угол 30 градусов * колчество тиков
+				
 				
 			}
 
@@ -59,7 +59,7 @@ namespace CG.HexogonFolder
 
 		private Vector3 TurnPoint(Vector3 vector, float angle)
 		{
-			
+			return MatrixMultiplication(vector, CreateTurnMatrix(angle));
 		}
 
 		private Vector3 MoveVector(Vector3 vector, int deltaX)
