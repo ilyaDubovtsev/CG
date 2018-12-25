@@ -2,17 +2,20 @@ using System;
 using OpenTK;
 using System.ComponentModel;
 using System.Drawing;
+using CG.HexogonFolder;
 using OpenTK.Graphics.OpenGL;
 
 namespace CG.Painter
 {
     public class Game
     {
-        public GameWindow Window;
+        private static GameWindow Window;
+        private static HexagonBuilder HexagonBuilder;
 
         public Game(GameWindow window)
         {
             Window = window;
+            HexagonBuilder = new HexagonBuilder(window.Width, window.Height);
 
             Window.Load += WindowLoad;
             Window.RenderFrame += WindowRenderFrame;
@@ -32,13 +35,9 @@ namespace CG.Painter
         {
             GL.ClearColor(Color.FromArgb(5,5,25));
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            
-            GL.Begin(PrimitiveType.Triangles);
-            GL.Color3(Color.Red);
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(1, 1, 0);
-            GL.Vertex3(-1, 1, 0);
-            GL.End();
+
+            var hexagon = HexagonBuilder.GetNext();
+            Drawer.DrawLine(hexagon.BorderPoints, Color.Red);
             
             GL.Flush();
             Window.SwapBuffers();

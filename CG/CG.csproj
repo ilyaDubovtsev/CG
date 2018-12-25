@@ -40,8 +40,8 @@
     <Compile Include="HexogonFolder\Hexagon.cs" />
     <Compile Include="HexogonFolder\HexagonBuilder.cs" />
     <Compile Include="HexogonFolder\IHexagonBuilder.cs" />
-    <Compile Include="Painter\Game.cs" />
-    <Compile Include="Painter\Painter.cs" />
+    <Compile Include="Drawing\Game.cs" />
+    <Compile Include="Drawing\Drawer.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
