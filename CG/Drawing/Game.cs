@@ -35,14 +35,14 @@ namespace CG.Painter
 
         private void WindowUpdateFrame(object sender, FrameEventArgs e)
         {
-            
+
         }
 
         private void WindowRenderFrame(object sender, FrameEventArgs e)
         {
             GL.ClearColor(Color.FromArgb(5,5,25));
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            
+
             if (CurrentFrame % ChangeFrameNumber == 0)
             {
                 CurrentHexagon = HexagonBuilder.GetNext();
@@ -52,10 +52,11 @@ namespace CG.Painter
             Drawer.DrawLine(CurrentHexagon.BorderPoints, Color.DimGray);
             Drawer.DrawHexagon(CurrentHexagon.BorderPoints, CurrentHexagon.Center, Palette.GetColorByNumber);
             Drawer.DrawLine(new List<Vector3>{CurrentHexagon.Center, CurrentHexagon.BorderPoints.First()}, Color.Red);
-            
+            Drawer.DrawLine(new List<Vector3>{new Vector3(-1 , 0 , 0), new Vector3(1 , 0 , 0)}, Color4.Red);
+
             GL.Flush();
             Window.SwapBuffers();
-            
+
             CurrentFrame++;
         }
 
