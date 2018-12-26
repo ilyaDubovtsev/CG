@@ -48,6 +48,11 @@ namespace CG.HexagonFolder
 				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y, 0);
 			}
 
+			if (CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick > 1)
+			{
+				CurrentTick = 0;
+			}
+
 			return new Hexagon()
 			{
 				Center = new Vector3((float)(CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick), CurrentHexagon.Center.Y, CurrentHexagon.Center.Z),
