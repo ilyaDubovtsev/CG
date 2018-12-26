@@ -13,6 +13,7 @@ namespace CG.HexagonFolder
 		private int CurrentTick;
 		private const double DeltaPhi = Math.PI / 6;
 		private static Hexagon CurrentHexagon;
+		private static float VerticalBalance;
 
 
 		public HexagonBuilder(int width, int height)
@@ -21,6 +22,7 @@ namespace CG.HexagonFolder
 
 			var horizontalR = 0.05 * width;
 			var verticalR = 0.2 * height;
+			VerticalBalance = width / height;
 
 			Radius = (horizontalR > verticalR) ? horizontalR / width : verticalR / height;
 
@@ -50,12 +52,12 @@ namespace CG.HexagonFolder
 			for (int i = 0; i < 6; i++)
 			{
 				newBorder.Add(TurnPoints(CurrentHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
-				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y, 0);
+				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y * VerticalBalance, 0);
 			}
 
 			return new Hexagon()
 			{
-				Center = new Vector3((float)(CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick), CurrentHexagon.Center.Y, CurrentHexagon.Center.Z),
+				Center = new Vector3((float)(CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick), CurrentHexagon.Center.Y * VerticalBalance, CurrentHexagon.Center.Z),
 				BorderPoints = newBorder
 			};
 		}
@@ -79,7 +81,6 @@ namespace CG.HexagonFolder
 
 		private Vector3 MatrixMultiplication(Vector3 vector, float[,] turnMatrix)
 		{
-
 			var result = new Vector3();
 			result.X = vector.X * turnMatrix[0, 0] + vector.Y * turnMatrix[0, 1] + vector.Z * turnMatrix[0, 2];
 			result.Y = vector.X * turnMatrix[1, 0] + vector.Y * turnMatrix[1, 1] + vector.Z * turnMatrix[1, 2];

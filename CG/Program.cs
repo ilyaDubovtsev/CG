@@ -8,12 +8,12 @@ namespace CG
     {
         static void Main()
         {
-            GameWindow window = new GameWindow(800, 500);
-            
+            GameWindow window = new GameWindow(800, 400);
+
             Game game = new Game(window);
-            
+
             window.Run();
-            
+
         }
     }
 }
