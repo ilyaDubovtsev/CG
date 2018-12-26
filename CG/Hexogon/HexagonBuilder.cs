@@ -21,13 +21,13 @@ namespace CG.HexagonFolder
 
 			var horizontalR = 0.05 * width;
 			var verticalR = 0.2 * height;
-			
+
 			Radius = (horizontalR > verticalR) ? horizontalR / width : verticalR / height;
-			
+
 			DeltaX = (Math.PI / 6 * Radius);
-			CurrentHexagon = new Hexagon 
+			CurrentHexagon = new Hexagon
 				{
-					Center = new Vector3(0, 0, 0), 
+					Center = new Vector3(0, 0, 0),
 					BorderPoints = new List<Vector3>()
 				};
 
@@ -39,6 +39,11 @@ namespace CG.HexagonFolder
 
 		public Hexagon GetNext()
 		{
+			if (CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick > 1 + Radius)
+			{
+				CurrentTick = 0;
+			}
+
 			CurrentTick += 1;
 
 			var newBorder = new List<Vector3>();
@@ -46,11 +51,6 @@ namespace CG.HexagonFolder
 			{
 				newBorder.Add(TurnPoint(CurrentHexagon.BorderPoints[i], (float)DeltaPhi * CurrentTick));
 				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y, 0);
-			}
-
-			if (CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick > 1)
-			{
-				CurrentTick = 0;
 			}
 
 			return new Hexagon()
