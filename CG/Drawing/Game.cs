@@ -20,7 +20,7 @@ namespace CG.Painter
         public Game(GameWindow window)
         {
             Window = window;
-            HexagonBuilder = new HexagonBuilder(window.Width, window.Height);
+            HexagonBuilder = new HexagonBuilder(window.Width, window.Height, 0, Vector3.Zero);
             CurrentFrame = 0;
             ChangeFrameNumber = 6;
             Window.Load += WindowLoad;
