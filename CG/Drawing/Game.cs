@@ -32,8 +32,12 @@ namespace CG.Painter
             CurrentHexagon = HexagonBuilder.GetNext();
             foreach (var borderPoint in CurrentHexagon.BorderPoints)
             {
-                SmallHexagonBuilders.Add(new HexagonBuilder(Window.Width, Window.Height, 1, borderPoint));
+                SmallHexagonBuilders.Add(new HexagonBuilder(Window.Width, Window.Height, 1, new Vector3(0, borderPoint.Y, 0)));
+                SmallHexagonBuilders.Add(new HexagonBuilder(Window.Width, Window.Height, 1, new Vector3(borderPoint.Y, 0, 0)));
             }
+            
+            SmallHexagonBuilders.Add(new HexagonBuilder(Window.Width, Window.Height, 1, new Vector3(0, 0, 0)));
+
 
             SmallHexagons = new List<Hexagon>();
             CurrentFrame = 0;
@@ -97,7 +101,7 @@ namespace CG.Painter
             
             foreach (var currentSmallHex in SmallHexagons)
             {
-                Drawer.DrawHexagon(currentSmallHex.BorderPoints, currentSmallHex.Center, Palette.GetColorByNumber);
+                Drawer.DrawHexagon(currentSmallHex.BorderPoints, currentSmallHex.Center, Palette.GetRandomColor);
             }
 
             GL.Flush();
