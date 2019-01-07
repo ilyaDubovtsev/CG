@@ -37,6 +37,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drawing\MagicColor.cs" />
     <Compile Include="Drawing\Palette.cs" />
     <Compile Include="Hexogon\Hexagon.cs" />
     <Compile Include="Hexogon\HexagonBuilder.cs" />

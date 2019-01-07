@@ -10,7 +10,7 @@ namespace CG.Painter
 {
     public static class Drawer
     {
-        public static void DrawHexagon(List<Vector3> vectorSet, Vector3 center, Func<int, Color> getColor)
+        public static void DrawHexagon(List<Vector3> vectorSet, Vector3 center, Func<int, Color4> getColor)
         {
             var count = vectorSet.Count;
             for (int i = 0; i < count; i++)
@@ -48,22 +48,21 @@ namespace CG.Painter
             GL.End();
         }
 
-        public static void DrowRectangle(List<Vector3> vectorSet, Color4 fillColor, Color4? fillColorGradient = null)
+        public static void DrowRectangle(List<Vector3> vectorSet, List<Color4> colorSet)
         {
             GL.Begin(PrimitiveType.Polygon);
-            GL.Color4(fillColor);
+            GL.Color4(colorSet[0]);
             GL.Vertex3(vectorSet[0]);
+            GL.Color4(colorSet[1]);
             GL.Vertex3(vectorSet[1]);
-            if (fillColorGradient.HasValue)
-            {
-                GL.Color4(fillColorGradient.Value);
-            }
+            GL.Color4(colorSet[2]);
             GL.Vertex3(vectorSet[2]);
+            GL.Color4(colorSet[3]);
             GL.Vertex3(vectorSet[3]);
             GL.End();
         }
 
-        public static void DrowBackground(Color4 startColor, Color4 endColor)
+        public static void DrowBackground(List<Color4> colorSet)
         {
             var rectangleVectors = new List<Vector3>
             {
@@ -73,7 +72,7 @@ namespace CG.Painter
                 new Vector3(-1, -1, 0),     
             };
             
-            DrowRectangle(rectangleVectors, startColor, endColor);
+            DrowRectangle(rectangleVectors, colorSet);
         }
     }
 }

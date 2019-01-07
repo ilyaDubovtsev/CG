@@ -16,6 +16,11 @@ namespace CG.Painter
         private static int ChangeFrameNumber;
         private static int CurrentFrame;
         private Hexagon CurrentHexagon;
+        private List<Color4> BackgroundColorSet;
+        private MagicColor ColorMaker1;
+        private MagicColor ColorMaker2;
+        private MagicColor ColorMaker3;
+        private MagicColor ColorMaker4;
 
         public Game(GameWindow window)
         {
@@ -23,6 +28,19 @@ namespace CG.Painter
             HexagonBuilder = new HexagonBuilder(window.Width, window.Height, 1, new Vector3(0.1f, 0.1f, 0));
             CurrentFrame = 0;
             ChangeFrameNumber = 6;
+            ColorMaker1 = new MagicColor(Color4.Coral);
+            ColorMaker2 = new MagicColor(Color4.LightYellow);
+            ColorMaker3 = new MagicColor(Color4.MintCream);
+            ColorMaker4 = new MagicColor(Color4.RoyalBlue);
+            
+            BackgroundColorSet = new List<Color4>
+            {
+                ColorMaker1.GetColor(),
+                ColorMaker2.GetColor(),
+                ColorMaker3.GetColor(),
+                ColorMaker4.GetColor(),
+            };
+            
             Window.Load += WindowLoad;
             Window.RenderFrame += WindowRenderFrame;
             Window.UpdateFrame += WindowUpdateFrame;
@@ -40,7 +58,6 @@ namespace CG.Painter
 
         private void WindowRenderFrame(object sender, FrameEventArgs e)
         {
-            GL.ClearColor(Color.FromArgb(5,5,25));
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
             if (CurrentFrame % ChangeFrameNumber == 0)
@@ -48,7 +65,14 @@ namespace CG.Painter
                 CurrentHexagon = HexagonBuilder.GetNext();
             }
 
-            Drawer.DrowBackground(Color4.LightSkyBlue, Color4.RoyalBlue);
+            BackgroundColorSet = new List<Color4>
+            {
+                ColorMaker1.GetColor(),
+                ColorMaker2.GetColor(),
+                ColorMaker3.GetColor(),
+                ColorMaker4.GetColor(),
+            };
+            Drawer.DrowBackground(BackgroundColorSet);
             Drawer.DrawLine(CurrentHexagon.BorderPoints, Color.DimGray);
             Drawer.DrawHexagon(CurrentHexagon.BorderPoints, CurrentHexagon.Center, Palette.GetColorByNumber);
             Drawer.DrawLine(new List<Vector3>{CurrentHexagon.Center, CurrentHexagon.BorderPoints.First()}, Color.Red);
