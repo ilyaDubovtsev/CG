@@ -13,6 +13,7 @@ namespace CG.Painter
     {
         private static GameWindow Window;
         private static HexagonBuilder HexagonBuilder;
+        private static List<HexagonBuilder> SmallHexagonBuilders;
         private static List<Hexagon> SmallHexagons;
         private static int ChangeFrameNumber;
         private static int CurrentFrame;
@@ -27,6 +28,13 @@ namespace CG.Painter
         {
             Window = window;
             HexagonBuilder = new HexagonBuilder(Window.Width, Window.Height, 0, new Vector3(0, 0, 0));
+            SmallHexagonBuilders = new List<HexagonBuilder>();
+            CurrentHexagon = HexagonBuilder.GetNext();
+            foreach (var borderPoint in CurrentHexagon.BorderPoints)
+            {
+                SmallHexagonBuilders.Add(new HexagonBuilder(Window.Width, Window.Height, 1, borderPoint));
+            }
+
             SmallHexagons = new List<Hexagon>();
             CurrentFrame = 0;
             ChangeFrameNumber = 6;
@@ -65,14 +73,13 @@ namespace CG.Painter
 
             if (CurrentFrame % ChangeFrameNumber == 0)
             {
-                CurrentHexagon = HexagonBuilder.GetNext();
-                
                 SmallHexagons = new List<Hexagon>();
-
-                foreach (var borderPoint in CurrentHexagon.BorderPoints)
+                foreach (var smallHexagonBuilder in SmallHexagonBuilders)
                 {
-                    SmallHexagons.Add(new HexagonBuilder(Window.Width, Window.Height, 1, borderPoint).GetNext());
+                    SmallHexagons.Add(smallHexagonBuilder.GetNext());
                 }
+                
+                CurrentHexagon = HexagonBuilder.GetNext();
             }
 
             BackgroundColorSet = new List<Color4>
