@@ -13,6 +13,7 @@ namespace CG.Painter
     {
         private static GameWindow Window;
         private static HexagonBuilder HexagonBuilder;
+        private static List<Hexagon> SmallHexagons;
         private static int ChangeFrameNumber;
         private static int CurrentFrame;
         private Hexagon CurrentHexagon;
@@ -25,7 +26,8 @@ namespace CG.Painter
         public Game(GameWindow window)
         {
             Window = window;
-            HexagonBuilder = new HexagonBuilder(window.Width, window.Height, 1, new Vector3(0.1f, 0.1f, 0));
+            HexagonBuilder = new HexagonBuilder(Window.Width, Window.Height, 0, new Vector3(0, 0, 0));
+            SmallHexagons = new List<Hexagon>();
             CurrentFrame = 0;
             ChangeFrameNumber = 6;
             ColorMaker1 = new MagicColor(Color4.Coral);
@@ -59,10 +61,18 @@ namespace CG.Painter
         private void WindowRenderFrame(object sender, FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
+            
 
             if (CurrentFrame % ChangeFrameNumber == 0)
             {
                 CurrentHexagon = HexagonBuilder.GetNext();
+                
+                SmallHexagons = new List<Hexagon>();
+
+                foreach (var borderPoint in CurrentHexagon.BorderPoints)
+                {
+                    SmallHexagons.Add(new HexagonBuilder(Window.Width, Window.Height, 1, borderPoint).GetNext());
+                }
             }
 
             BackgroundColorSet = new List<Color4>
@@ -73,10 +83,15 @@ namespace CG.Painter
                 ColorMaker4.GetColor(),
             };
             Drawer.DrowBackground(BackgroundColorSet);
-            Drawer.DrawLine(CurrentHexagon.BorderPoints, Color.DimGray);
             Drawer.DrawHexagon(CurrentHexagon.BorderPoints, CurrentHexagon.Center, Palette.GetColorByNumber);
+            Drawer.DrawLine(CurrentHexagon.BorderPoints, Color.DimGray);
             Drawer.DrawLine(new List<Vector3>{CurrentHexagon.Center, CurrentHexagon.BorderPoints.First()}, Color.Red);
             Drawer.DrawLine(new List<Vector3>{new Vector3(-1 , 0 , 0), new Vector3(1 , 0 , 0)}, Color4.Red);
+            
+            foreach (var currentSmallHex in SmallHexagons)
+            {
+                Drawer.DrawHexagon(currentSmallHex.BorderPoints, currentSmallHex.Center, Palette.GetColorByNumber);
+            }
 
             GL.Flush();
             Window.SwapBuffers();

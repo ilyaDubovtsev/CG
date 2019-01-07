@@ -9,11 +9,11 @@ namespace CG.HexagonFolder
 	public class HexagonBuilder : IHexagonBuilder
 	{
 		private double Radius;
-		private static double DeltaX;
+		private double DeltaX;
 		private int CurrentTick;
 		private const double DeltaPhi = Math.PI / 6;
-		private static Hexagon CurrentHexagon;
-		private static float VerticalBalance;
+		private Hexagon CurrentHexagon;
+		private float VerticalBalance;
 		public int Deep;
 		public Vector3 BasicPoint;
 		private Vector3 Center;
@@ -30,7 +30,9 @@ namespace CG.HexagonFolder
 			Center = basicPoint;
 			Deep = deep;
 
-			Radius = (horizontalR > verticalR) ? horizontalR / width * Math.Pow(Coefficient, deep) : verticalR / height * Math.Pow(Coefficient, deep);
+			Radius = (horizontalR > verticalR) ? 
+				horizontalR / width * Math.Pow(Coefficient, deep) : 
+				verticalR / height * Math.Pow(Coefficient, deep);
 			BasicPoint = basicPoint;
 			DeltaX = (Math.PI / 6 * Radius);
 			CurrentHexagon = new Hexagon

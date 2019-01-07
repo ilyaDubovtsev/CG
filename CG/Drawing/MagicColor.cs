@@ -32,7 +32,7 @@ namespace CG.Painter
             else
             {
                 r = Color.R - Step;
-                if (Color.R <= 0)
+                if (Color.R <= 0.2)
                     Settings.RInc = true;
             }
 
@@ -46,7 +46,7 @@ namespace CG.Painter
             else
             {
                 g = Color.G - Step;
-                if (Color.G <= 0)
+                if (Color.G <= 0.2)
                     Settings.GInc = true;
             }
 
@@ -60,7 +60,7 @@ namespace CG.Painter
             else
             {
                 b = Color.B - Step;
-                if (Color.B <= 0)
+                if (Color.B <= 0.2)
                     Settings.BInc = true;
             }
 
