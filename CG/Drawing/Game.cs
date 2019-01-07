@@ -74,9 +74,9 @@ namespace CG.Painter
             if (CurrentFrame % ChangeFrameNumber == 0)
             {
                 SmallHexagons = new List<Hexagon>();
-                foreach (var borderPoint in CurrentHexagon.BorderPoints)
+                foreach (var smallHexagonBuilder in SmallHexagonBuilders)
                 {
-                    SmallHexagons.Add(new HexagonBuilder(Window.Width, Window.Height, 1, borderPoint).GetNext());
+                    SmallHexagons.Add(smallHexagonBuilder.GetNext());
                 }
                 
                 CurrentHexagon = HexagonBuilder.GetNext();
