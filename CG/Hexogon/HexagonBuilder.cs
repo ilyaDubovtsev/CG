@@ -16,6 +16,7 @@ namespace CG.HexagonFolder
 		private static float VerticalBalance;
 		public int Deep;
 		public Vector3 BasicPoint;
+		private Vector3 Center;
 		public double Coefficient = 0.3;
 
 
@@ -26,11 +27,11 @@ namespace CG.HexagonFolder
 			var horizontalR = 0.05 * width;
 			var verticalR = 0.2 * height;
 			VerticalBalance = width / height;
-
+			Center = basicPoint;
 			Deep = deep;
 
 			Radius = (horizontalR > verticalR) ? horizontalR / width * Math.Pow(Coefficient, deep) : verticalR / height * Math.Pow(Coefficient, deep);
-
+			BasicPoint = basicPoint;
 			DeltaX = (Math.PI / 6 * Radius);
 			CurrentHexagon = new Hexagon
 				{
@@ -56,13 +57,15 @@ namespace CG.HexagonFolder
 			var newBorder = new List<Vector3>();
 			for (int i = 0; i < 6; i++)
 			{
-				newBorder.Add(TurnPoints(CurrentHexagon.BorderPoints[i] , (float)DeltaPhi * CurrentTick) + BasicPoint);
+				newBorder.Add(TurnPoints(CurrentHexagon.BorderPoints[i] + BasicPoint, (float)DeltaPhi * CurrentTick));
 				newBorder[newBorder.Count - 1] = new Vector3((float)(newBorder[newBorder.Count - 1].X - 1 + DeltaX * CurrentTick), newBorder[newBorder.Count - 1].Y * VerticalBalance, 0);
 			}
-
+			Center = TurnPoints(BasicPoint, (float) DeltaPhi * CurrentTick);
+			Center.X = Center.X + (float)DeltaX * CurrentTick - 1;
+			Center.Y *= VerticalBalance;
 			return new Hexagon()
 			{
-				Center = new Vector3((float)(CurrentHexagon.Center.X - 1 + DeltaX * CurrentTick), CurrentHexagon.Center.Y * VerticalBalance, CurrentHexagon.Center.Z) + BasicPoint,
+				Center = (this.Center),
 				BorderPoints = newBorder
 			};
 		}
